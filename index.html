@@ -1,1 +1,70 @@
-# BookMind-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BookMind | Read. Test. Remember.</title>
+<style>
+:root{--p:#7044d8;--p2:#8b63e8;--ink:#19131f;--muted:#746c80;--bg:#faf8fc;--card:#fff;--line:#e8e1f0;--soft:#f0eafb;--green:#16834b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}
+nav{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:10}.logo{font-weight:900;font-size:24px;color:var(--p)}.navlinks{display:flex;gap:24px;align-items:center}.navlinks a{color:var(--muted);text-decoration:none;font-weight:650}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}.primary{background:var(--p);color:white}.light{background:var(--soft);color:var(--p)}.hero{background:linear-gradient(135deg,#4c259d,#8d65e8);color:#fff;padding:80px 7%;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}.hero h1{font-size:58px;line-height:1.03;margin:0 0 18px}.hero p{font-size:19px;line-height:1.6;opacity:.93;max-width:680px}.search{display:flex;gap:10px;margin-top:28px;max-width:680px}.search input{flex:1;padding:15px 16px;border:0;border-radius:12px;font-size:16px}.hero-card{background:#fff;color:var(--ink);padding:24px;border-radius:24px;box-shadow:0 20px 60px #24113f45}.cover{height:260px;border-radius:18px;background:linear-gradient(145deg,#28133a,#8d65e8);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:flex-end}.cover strong{font-size:30px}.cover small{opacity:.7}.wrap{max-width:1180px;margin:auto;padding:60px 22px}.section-title{font-size:32px;margin:0 0 10px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}.book{display:flex;gap:18px;align-items:center}.mini-cover{width:78px;height:108px;border-radius:9px;background:linear-gradient(145deg,#2d1740,#8d65e8);color:#fff;padding:10px;font-size:10px;font-weight:800;display:flex;align-items:flex-end}.badge{display:inline-block;padding:6px 10px;border-radius:99px;background:#eaf8f0;color:var(--green);font-size:12px;font-weight:800}.number{font-size:34px;font-weight:900;color:var(--p)}.feature{min-height:160px}.feature h3{font-size:19px}.steps{counter-reset:s}.step{position:relative;padding-left:48px}.step:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--soft);color:var(--p);display:grid;place-items:center;font-weight:900}.cta{background:#21162b;color:#fff;border-radius:26px;padding:45px;display:flex;justify-content:space-between;gap:20px;align-items:center}.cta h2{font-size:34px;margin:0 0 8px}.footer{padding:30px 7%;border-top:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between}
+.modal{display:none;position:fixed;inset:0;background:#140b1b99;z-index:20;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modalbox{background:#fff;border-radius:22px;padding:25px;max-width:700px;width:100%;max-height:90vh;overflow:auto}.quizq{font-size:21px}.option{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);padding:14px;border-radius:11px;margin:9px 0;cursor:pointer;font-weight:650}.option.selected{border:2px solid var(--p);background:var(--soft)}.score{text-align:center;font-size:65px;color:var(--p);font-weight:900}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:55px 6%}.hero h1{font-size:42px}.navlinks a{display:none}.grid,.grid2{grid-template-columns:1fr}.cta{display:block}.search{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav><div class="logo">BookMind</div><div class="navlinks"><a href="#how">How it works</a><a href="#books">Books</a><a href="#teachers">Teachers</a><button class="btn light" onclick="openModal('login')">Log in</button><button class="btn primary" onclick="openModal('signup')">Get started</button></div></nav>
+
+<section class="hero">
+<div><span class="badge">Reading comprehension platform</span><h1>Don't just finish a book. Know it.</h1><p>BookMind helps readers test what they understood, discover what they missed, and build stronger reading comprehension.</p><div class="search"><input id="bookSearch" placeholder="Search a book, e.g. The Great Gatsby"><button class="btn primary" onclick="searchBook()">Find a quiz</button></div></div>
+<div class="hero-card"><div class="cover"><small>Featured assessment</small><strong>The Great Gatsby</strong><span>5-question comprehension demo</span></div><p><b>Average score:</b> 86%</p><div style="height:8px;background:#eee9f2;border-radius:9px"><div style="height:100%;width:86%;background:var(--p);border-radius:9px"></div></div></div>
+</section>
+
+<section class="wrap" id="books">
+<h2 class="section-title">Popular reading assessments</h2><p class="muted">Start with a demo or explore the library in the full version.</p>
+<div class="grid">
+<div class="card book"><div class="mini-cover">THE GREAT<br>GATSBY</div><div><h3>The Great Gatsby</h3><p class="muted">Classic · Comprehension</p><button class="btn primary" onclick="startQuiz()">Take quiz</button></div></div>
+<div class="card book"><div class="mini-cover">ANIMAL<br>FARM</div><div><h3>Animal Farm</h3><p class="muted">Classic · Coming soon</p><button class="btn light" onclick="alert('This book assessment is part of the planned library.')">View</button></div></div>
+<div class="card book"><div class="mini-cover">CHARLOTTE'S<br>WEB</div><div><h3>Charlotte's Web</h3><p class="muted">Children · Coming soon</p><button class="btn light" onclick="alert('This book assessment is part of the planned library.')">View</button></div></div>
+</div>
+</section>
+
+<section class="wrap" id="how">
+<h2 class="section-title">How BookMind works</h2><div class="grid steps">
+<div class="card step"><h3>Choose a book</h3><p class="muted">Find a book or use permitted teacher-provided content.</p></div>
+<div class="card step"><h3>Take the assessment</h3><p class="muted">Answer questions about plot, characters, themes and meaning.</p></div>
+<div class="card step"><h3>Understand your score</h3><p class="muted">See what you know and what you should review.</p></div>
+</div>
+</section>
+
+<section class="wrap" id="teachers">
+<h2 class="section-title">Built for teachers and schools</h2>
+<div class="grid">
+<div class="card feature"><div class="number">01</div><h3>Assign assessments</h3><p class="muted">Give students reading quizzes for individual books or chapters.</p></div>
+<div class="card feature"><div class="number">02</div><h3>Track comprehension</h3><p class="muted">See individual and class-level performance.</p></div>
+<div class="card feature"><div class="number">03</div><h3>Identify gaps</h3><p class="muted">Find students who need support with inference, themes or recall.</p></div>
+</div>
+</section>
+
+<section class="wrap"><div class="cta"><div><h2>Ready to test what you read?</h2><p>Start with a free BookMind assessment.</p></div><button class="btn primary" onclick="startQuiz()">Try the demo quiz</button></div></section>
+<footer><b>BookMind</b><span>Read · Test · Remember</span></footer>
+
+<div id="modal" class="modal"><div class="modalbox" id="modalContent"></div></div>
+
+<script>
+const questions=[
+["Who narrates The Great Gatsby?",["Jay Gatsby","Tom Buchanan","Nick Carraway","George Wilson"],2],
+["What does Gatsby's pursuit of Daisy most strongly represent?",["Revenge","An attempt to recreate the past","A wish to leave New York","A dislike of Tom"],1],
+["What does the green light symbolize for Gatsby?",["Danger","Hope and an unreachable future","Wealth","A warning"],1],
+["Which theme is central to the novel?",["Space exploration","The American Dream and its limitations","Environmental conservation","Technology"],1],
+["What is Gatsby's main motivation for his wealth?",["To impress his employer","To help his family","To win Daisy back","To move to Europe"],2]
+];
+let qi=0,score=0,chosen=null;
+function openModal(type){let c=document.getElementById("modalContent");c.innerHTML=type==="login"?`<h2>Log in to BookMind</h2><p class="muted">Access your reading dashboard.</p><input placeholder="Email" style="width:100%;padding:13px;margin:8px 0;border:1px solid #e8e1f0;border-radius:10px"><input placeholder="Password" type="password" style="width:100%;padding:13px;margin:8px 0;border:1px solid #e8e1f0;border-radius:10px"><button class="btn primary" onclick="closeModal()">Log in</button>`:`<h2>Create your BookMind account</h2><p class="muted">Save quizzes, scores and reading progress.</p><input placeholder="Full name" style="width:100%;padding:13px;margin:8px 0;border:1px solid #e8e1f0;border-radius:10px"><input placeholder="Email" style="width:100%;padding:13px;margin:8px 0;border:1px solid #e8e1f0;border-radius:10px"><button class="btn primary" onclick="closeModal()">Create account</button>`;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function searchBook(){let v=document.getElementById("bookSearch").value.trim().toLowerCase();if(v.includes("gatsby"))startQuiz();else alert("The searchable library will expand in the full version. Try “The Great Gatsby” for the demo.")}
+function startQuiz(){qi=0;score=0;chosen=null;render()}
+function render(){document.getElementById("modalContent").innerHTML=`<h2>The Great Gatsby — Comprehension Test</h2><div class="muted">Question ${qi+1} of ${questions.length}</div><div style="height:8px;background:#eee9f2;border-radius:9px;margin:15px 0 25px"><div style="height:100%;width:${(qi+1)/questions.length*100}%;background:#7044d8;border-radius:9px"></div></div><div class="quizq">${questions[qi][0]}</div><div id="opts"></div><button id="next" class="btn primary" disabled onclick="nextQ()">${qi===questions.length-1?"Finish":"Next"}</button> <button class="btn light" onclick="closeModal()">Exit</button>`;let o=document.getElementById("opts");questions[qi][1].forEach((t,i)=>{let b=document.createElement("button");b.className="option";b.textContent=t;b.onclick=()=>{if(chosen!==null)return;chosen=i;b.classList.add("selected");document.getElementById("next").disabled=false};o.appendChild(b)});document.getElementById("modal").classList.add("show")}
+function nextQ(){if(chosen===questions[qi][2])score++;qi++;if(qi<questions.length){chosen=null;render()}else{let p=Math.round(score/questions.length*100);document.getElementById("modalContent").innerHTML=`<h2 style="text-align:center">Assessment complete</h2><div class="score">${p}%</div><p style="text-align:center">You answered ${score} of ${questions.length} correctly.</p><div class="card"><b>BookMind insight</b><p class="muted">${p>=80?"Excellent comprehension.":"Good start. Review the book's themes and details, then try again."}</p></div><button class="btn primary" onclick="startQuiz()">Retake quiz</button> <button class="btn light" onclick="closeModal()">Close</button>`}}
+</script>
+</body>
+</html>
