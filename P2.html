@@ -1,0 +1,209 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BookMind — Read. Test. Remember.</title>
+<style>
+:root{--p:#7044d8;--ink:#19131f;--muted:#746c80;--bg:#faf8fc;--line:#e8e1f0;--soft:#f0eafb;--green:#16834b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}
+nav{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:5}.logo{font-size:24px;font-weight:900;color:var(--p)}.links{display:flex;gap:18px;align-items:center}.links a{color:var(--muted);text-decoration:none}.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:800;cursor:pointer}.primary{background:var(--p);color:white}.light{background:var(--soft);color:var(--p)}
+.hero{background:linear-gradient(135deg,#4c259d,#8d65e8);color:white;padding:60px 7%;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}.hero h1{font-size:52px;line-height:1.03;margin:12px 0}.hero p{font-size:18px;line-height:1.6}.search{display:flex;gap:10px;margin-top:25px}.search input{flex:1;padding:15px;border:0;border-radius:12px;font-size:16px}.heroCard{background:white;color:var(--ink);padding:20px;border-radius:22px}.cover{height:240px;border-radius:16px;background:linear-gradient(145deg,#28133a,#8d65e8);color:white;padding:20px;display:flex;flex-direction:column;justify-content:end}.cover strong{font-size:30px}
+.wrap{max-width:1180px;margin:auto;padding:48px 22px}.title{font-size:31px;margin:0 0 8px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.book{display:flex;gap:15px;align-items:center}.mini{width:72px;height:102px;flex-shrink:0;border-radius:8px;background:linear-gradient(145deg,#2d1740,#8d65e8);color:white;padding:9px;font-size:10px;font-weight:800;display:flex;align-items:end}.filter{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.filter .active{background:var(--p);color:white}.modal{display:none;position:fixed;inset:0;background:#140b1b99;z-index:20;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{background:white;border-radius:22px;padding:24px;max-width:700px;width:100%;max-height:90vh;overflow:auto}.option{display:block;width:100%;text-align:left;background:white;border:1px solid var(--line);padding:14px;border-radius:11px;margin:9px 0;cursor:pointer;font-weight:650}.option.selected{border:2px solid var(--p);background:var(--soft)}.option.correct{border:2px solid #16834b;background:#eaf8f0;color:#12683d}.option.wrong{border:2px solid #c43d4b;background:#fff0f1;color:#a52d3a}.progress{height:8px;background:#eee9f2;border-radius:9px;overflow:hidden}.progress span{display:block;height:100%;background:var(--p)}.score{text-align:center;font-size:65px;font-weight:900;color:var(--p)}footer{padding:30px 7%;border-top:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:48px 6%}.hero h1{font-size:40px}.links a{display:none}.grid{grid-template-columns:1fr}.search{flex-direction:column}}
+.scoreSmall{font-size:27px;font-weight:900;color:#7044d8}</style></head><body>
+<nav><div class="logo">BookMind</div><div class="links"><a href="#dashboard">My Dashboard</a><a href="#library">Books</a><a href="#how">How it works</a><button class="btn light" onclick="account()">Log in</button><button class="btn primary" onclick="account()">Get started</button></div></nav>
+<section class="hero"><div><span>Phase 1 — Book Library + Quiz</span><h1>Don't just finish a book. Know it.</h1><p>Choose a book, take a comprehension assessment, and see how well you understood what you read.</p><div class="search"><input id="search" placeholder="Search books..." oninput="renderBooks()"><button class="btn primary" onclick="document.getElementById('library').scrollIntoView()">Browse books</button></div></div><div class="heroCard"><div class="cover"><small>Featured assessment</small><strong>The Great Gatsby</strong><span>5-question comprehension demo</span></div><p><b>Test:</b> plot · characters · themes · meaning</p></div></section>
+<section class="wrap" id="library"><h2 class="title">Book Library</h2><p class="muted">Start with the available assessments.</p><div class="filter"><button class="btn light active" onclick="cat('All',this)">All</button><button class="btn light" onclick="cat('Classic',this)">Classics</button><button class="btn light" onclick="cat('Children',this)">Children</button><button class="btn light" onclick="cat('School',this)">School</button></div><div id="books" class="grid"></div></section>
+<section class="wrap" id="how"><h2 class="title">How BookMind works</h2><div class="grid"><div class="card"><h3>1. Choose a book</h3><p class="muted">Select a book and start its assessment.</p></div><div class="card"><h3>2. Answer questions</h3><p class="muted">Test recall, characters, themes and meaning.</p></div><div class="card"><h3>3. Learn from your score</h3><p class="muted">Review your performance and know what to revisit.</p></div></div></section>
+<section class="wrap"><div class="card"><h2>Coming next</h2><p class="muted">Chapter quizzes, AI-generated assessments from permitted content, accounts and saved progress.</p></div></section>
+
+<section class="wrap" id="dashboard">
+  <div class="card">
+    <h2 class="title">Your reading progress</h2>
+    <p class="muted">Create a profile to keep your quiz history and track your comprehension progress on this device.</p>
+    <button class="btn primary" onclick="account()">Open my dashboard</button>
+  </div>
+</section>
+<footer><b>BookMind</b><span>Read · Test · Remember</span></footer>
+<div id="modal" class="modal"><div id="box" class="box"></div></div>
+<script>
+const books=[["The Great Gatsby","F. Scott Fitzgerald","Classic",1],["Animal Farm","George Orwell","Classic",0],["Charlotte's Web","E. B. White","Children",0],["A Christmas Carol","Charles Dickens","School",0],["The Secret Garden","Frances Hodgson Burnett","Children",0],["Pride and Prejudice","Jane Austen","School",0]];
+const qs=[["Who narrates The Great Gatsby?",["Jay Gatsby","Tom Buchanan","Nick Carraway","George Wilson"],2],["What does Gatsby's pursuit of Daisy most strongly represent?",["Revenge","An attempt to recreate the past","A wish to leave New York","A dislike of Tom"],1],["What does the green light symbolize for Gatsby?",["Danger","Hope and an unreachable future","Wealth","A warning"],1],["Which theme is central to the novel?",["Space exploration","The American Dream and its limitations","Environmental conservation","Technology"],1],["What is Gatsby's main motivation for his wealth?",["To impress his employer","To help his family","To win Daisy back","To move to Europe"],2]];
+let category="All",i=0,points=0,chosen=null;
+function renderBooks(){let s=document.getElementById("search").value.toLowerCase();document.getElementById("books").innerHTML=books.filter(b=>(category==="All"||b[2]===category)&&(b[0].toLowerCase().includes(s)||b[1].toLowerCase().includes(s))).map(b=>`<div class="card book"><div class="mini">${b[0].toUpperCase()}</div><div><h3>${b[0]}</h3><div class="muted">${b[1]}</div><p class="muted">${b[3]?"Classic · 5-question demo":"Assessment coming soon"}</p>${b[3]?'<button class="btn primary" onclick="startQuiz()">Take quiz</button>':'<button class="btn light" onclick="alert(\'This assessment is coming in the next library update.\')">Coming soon</button>'}</div></div>`).join("")||'<div class="card"><h3>No books found</h3></div>'}
+function cat(c,b){category=c;document.querySelectorAll(".filter button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderBooks()}
+function account(){
+  const user=getUser();
+  if(user){ showDashboard(); return; }
+
+  document.getElementById("box").innerHTML=
+  '<h2>Create your BookMind profile</h2>'+
+  '<p class="muted">Enter your details to create a local demo profile.</p>'+
+  '<label style="display:block;margin-top:12px;font-weight:700">Name</label>'+
+  '<input id="profileName" autocomplete="name" placeholder="Your name" style="width:100%;padding:13px;margin:7px 0 12px;border:1px solid #e8e1f0;border-radius:10px">'+
+  '<label style="display:block;font-weight:700">Email</label>'+
+  '<input id="profileEmail" autocomplete="email" placeholder="you@example.com" type="email" style="width:100%;padding:13px;margin:7px 0 16px;border:1px solid #e8e1f0;border-radius:10px">'+
+  '<div id="profileError" style="display:none;color:#a52d3a;background:#fff0f1;padding:10px;border-radius:10px;margin-bottom:12px"></div>'+
+  '<button class="btn primary" id="profileCreate">Create profile</button> '+
+  '<button class="btn light" id="profileCancel">Cancel</button>';
+
+  document.getElementById("modal").classList.add("show");
+  document.getElementById("profileCreate").addEventListener("click", createProfile);
+  document.getElementById("profileCancel").addEventListener("click", closeM);
+}
+
+function getUser(){
+  try{return JSON.parse(localStorage.getItem("bookmindUser")||"null");}
+  catch(e){return null;}
+}
+
+function getScores(){
+  try{return JSON.parse(localStorage.getItem("bookmindScores")||"[]");}
+  catch(e){return [];}
+}
+
+function createProfile(){
+  const name=document.getElementById("profileName").value.trim();
+  const email=document.getElementById("profileEmail").value.trim();
+  const error=document.getElementById("profileError");
+
+  if(!name || !email){
+    error.textContent="Please enter both your name and email.";
+    error.style.display="block";
+    return;
+  }
+
+  const user={name:name,email:email};
+  try{
+    localStorage.setItem("bookmindUser",JSON.stringify(user));
+    if(!localStorage.getItem("bookmindScores")) localStorage.setItem("bookmindScores","[]");
+  }catch(e){
+    error.textContent="Your browser is blocking local storage. Please allow website storage and try again.";
+    error.style.display="block";
+    return;
+  }
+
+  showDashboard();
+}
+
+function saveScore(score){
+  const user=getUser();
+  if(!user)return;
+  const scores=getScores();
+  scores.push({book:"The Great Gatsby",score:score,date:new Date().toLocaleDateString()});
+  try{localStorage.setItem("bookmindScores",JSON.stringify(scores));}catch(e){}
+}
+
+function showDashboard(){
+  const user=getUser();
+  if(!user){account();return;}
+
+  const scores=getScores();
+  const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b.score,0)/scores.length):0;
+  const best=scores.length?Math.max(...scores.map(x=>x.score)):0;
+
+  document.getElementById("box").innerHTML=
+  '<h2>Welcome, '+escapeHtml(user.name)+'</h2>'+
+  '<p class="muted">'+escapeHtml(user.email)+'</p>'+
+  '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0">'+
+  '<div class="card" style="text-align:center"><div class="scoreSmall">'+scores.length+'</div><small>Quizzes taken</small></div>'+
+  '<div class="card" style="text-align:center"><div class="scoreSmall">'+avg+'%</div><small>Average score</small></div>'+
+  '<div class="card" style="text-align:center"><div class="scoreSmall">'+best+'%</div><small>Best score</small></div></div>'+
+  '<h3>Quiz history</h3>'+
+  (scores.length?scores.slice().reverse().map(s=>'<div class="card" style="margin:8px 0;display:flex;justify-content:space-between"><span>'+escapeHtml(s.book)+'<br><small class="muted">'+escapeHtml(s.date)+'</small></span><b style="color:#7044d8">'+s.score+'%</b></div>').join(""):'<p class="muted">No quizzes saved yet. Take your first assessment.</p>')+
+  '<button class="btn primary" onclick="closeM()">Continue reading</button> '+
+  '<button class="btn light" onclick="logout()">Log out</button>';
+
+  document.getElementById("modal").classList.add("show");
+}
+
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c];});
+}
+
+function logout(){
+  localStorage.removeItem("bookmindUser");
+  closeM();
+}
+function closeM(){document.getElementById("modal").classList.remove("show")}
+function startQuiz(){i=0;points=0;chosen=null;showQ()}
+const explanations=[
+"Nick Carraway is the narrator of The Great Gatsby and tells the story from his perspective.",
+"Gatsby's pursuit of Daisy represents his attempt to recreate an idealized version of the past.",
+"The green light represents Gatsby's longing for Daisy and the future he believes he can reach.",
+"The novel explores the American Dream, wealth, class, and the limitations of pursuing an idealized life.",
+"Gatsby's wealth and lifestyle are closely connected to his desire to win Daisy back."
+];
+
+function showQ(){
+let q=qs[i];
+document.getElementById("box").innerHTML=`<h2>The Great Gatsby — Comprehension Test</h2>
+<div class="muted">Question ${i+1} of ${qs.length}</div>
+<div class="progress" style="margin:12px 0 24px"><span style="width:${(i+1)/qs.length*100}%"></span></div>
+<h3>${q[0]}</h3><div id="opts"></div>
+<div id="feedback" style="display:none;margin:15px 0;padding:15px;border-radius:12px;background:#f0eafb"></div>
+<button id="check" class="btn primary" disabled onclick="checkAnswer()">Check answer</button>
+<button id="next" class="btn primary" style="display:none" onclick="nextQ()">${i===qs.length-1?"Finish":"Next question"}</button>
+<button class="btn light" onclick="closeM()">Exit</button>`;
+q[1].forEach((t,k)=>{
+let b=document.createElement("button");
+b.className="option"; b.textContent=t;
+b.onclick=()=>selectAnswer(b,k);
+document.getElementById("opts").appendChild(b);
+});
+document.getElementById("modal").classList.add("show");
+}
+
+function selectAnswer(button,k){
+if(chosen!==null && document.getElementById("check").style.display!=="none") {
+  document.querySelectorAll(".option").forEach(b=>b.classList.remove("selected"));
+}
+chosen=k;
+document.querySelectorAll(".option").forEach(b=>b.classList.remove("selected"));
+button.classList.add("selected");
+document.getElementById("check").disabled=false;
+}
+
+function checkAnswer(){
+if(chosen===null)return;
+let q=qs[i];
+let all=document.querySelectorAll(".option");
+all.forEach((b,n)=>{b.disabled=true;});
+let selected=all[chosen];
+let feedback=document.getElementById("feedback");
+
+if(chosen===q[2]){
+  selected.classList.remove("selected");
+  selected.classList.add("correct");
+  selected.innerHTML="✓ &nbsp; "+q[1][chosen];
+  points++;
+  feedback.style.display="block";
+  feedback.innerHTML=`<strong>Correct!</strong><br>${explanations[i]}`;
+}else{
+  selected.classList.remove("selected");
+  selected.classList.add("wrong");
+  selected.innerHTML="🚫 &nbsp; "+q[1][chosen];
+  let correct=all[q[2]];
+  correct.classList.add("correct");
+  correct.innerHTML="✓ &nbsp; "+q[1][q[2]];
+  feedback.style.display="block";
+  feedback.innerHTML=`<strong>Not quite.</strong><br><b>Correct answer:</b> ${q[1][q[2]]}<br>${explanations[i]}`;
+}
+document.getElementById("check").style.display="none";
+document.getElementById("next").style.display="inline-block";
+}
+
+function nextQ(){
+i++;
+if(i<qs.length){chosen=null;showQ()}
+else{
+let p=Math.round(points/qs.length*100);saveScore(p);
+document.getElementById("box").innerHTML=`<h2 style="text-align:center">Assessment complete</h2>
+<div class="score">${p}%</div>
+<p style="text-align:center">You answered ${points} of ${qs.length} correctly.</p>
+<div class="card"><b>BookMind insight</b>
+<p class="muted">${p>=80?"Excellent comprehension. You demonstrated strong understanding of the book's key ideas.":p>=60?"Good start. Review the questions you missed and revisit the book's themes and details.":"Keep reading and reviewing. Focus on the questions you missed, then try the assessment again."}</p></div>
+<button class="btn primary" onclick="startQuiz()">Retake quiz</button>
+<button class="btn light" onclick="showDashboard()">My dashboard</button>
+<button class="btn light" onclick="closeM()">Close</button>`;
+}
+}
+renderBooks();
+</script></body></html>
